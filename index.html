@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="FitBuddy AI fitness plan generator">
+  <title>FitBuddy | AI Fitness Planner</title>
+  <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}">
+</head>
+<body>
+<div class="site-shell">
+  <header class="nav">
+    <a href="/" class="brand"><span class="brand-mark">F</span><span>FitBuddy</span></a>
+    <nav><a href="#how">How it works</a><a href="/docs">API Docs</a></nav>
+  </header>
+
+  <main>
+    <section class="hero home-hero">
+      <div class="hero-copy">
+        <span class="eyebrow">AI-POWERED FITNESS PLANNER</span>
+        <h1>Your simple plan for a <span>healthier routine.</span></h1>
+        <p>Create a clear 7-day activity plan with FitBuddy, then refine it with feedback. Designed for simple, practical guidance.</p>
+        <div class="hero-points"><span>✓ 7-day plan</span><span>✓ AI + local fallback</span><span>✓ Feedback updates</span></div>
+      </div>
+      <div class="hero-art" aria-hidden="true"><div class="orb"></div><div class="mini-card card-one">7 DAYS<br><strong>Personal Plan</strong></div><div class="mini-card card-two">AI<br><strong>FitBuddy</strong></div><div class="pulse">♥</div></div>
+    </section>
+
+    {% if error %}<div class="alert error">{{ error }}</div>{% endif %}
+
+    <section class="card form-card" id="plan-form">
+      <div class="section-intro"><div><span class="eyebrow">STEP 01</span><h2>Tell us about you</h2></div><span class="secure-pill">● Local &amp; private</span></div>
+      <form action="/generate-workout" method="post" class="form-grid" onsubmit="showLoading(this)">
+        <label>Full name<input name="name" required minlength="2" maxlength="120" placeholder="Enter your name"></label>
+        <label>User ID<input name="user_id" required minlength="2" maxlength="80" placeholder="Example: FB001"></label>
+        <label>Age<input name="age" type="number" min="13" max="100" required placeholder="18"></label>
+        <label>Weight (kg)<input name="weight" type="number" min="1" max="500" step="0.1" required placeholder="60"></label>
+        <label>Fitness goal<select name="goal" required><option value="general wellness">General wellness</option><option value="weight loss">Weight loss</option><option value="muscle gain">Muscle gain</option><option value="flexibility">Flexibility</option></select></label>
+        <label>Workout intensity<select name="intensity" required><option value="low">Low</option><option value="medium" selected>Medium</option><option value="high">High</option></select></label>
+        <button class="button primary submit-btn" type="submit"><span class="btn-text">Generate My 7-Day Plan →</span><span class="btn-loading" hidden>Creating your plan…</span></button>
+      </form>
+      <p class="form-note">Your details are used to create and store your FitBuddy plan locally in the app database.</p>
+    </section>
+
+    <section class="how" id="how"><div class="section-intro center"><span class="eyebrow">HOW IT WORKS</span><h2>Three simple steps</h2></div><div class="steps"><article><b>01</b><h3>Share your basics</h3><p>Enter your age, weight, goal and preferred intensity.</p></article><article><b>02</b><h3>Get your plan</h3><p>FitBuddy creates a practical 7-day routine and recovery tip.</p></article><article><b>03</b><h3>Refine it</h3><p>Give feedback and generate an improved version when AI is enabled.</p></article></div></section>
+
+    <div class="notice"><strong>Important:</strong> FitBuddy gives general educational guidance, not medical advice. If you have an injury, health condition, or are under 18, involve a parent/guardian or qualified professional.</div>
+  </main>
+
+  <footer><span>© 2026 FitBuddy</span><span><a href="/docs">API Docs</a> · <a href="/view-all-users">Admin</a></span></footer>
+</div>
+<script>function showLoading(form){const b=form.querySelector('.submit-btn');b.disabled=true;b.querySelector('.btn-text').hidden=true;b.querySelector('.btn-loading').hidden=false;}</script>
+</body>
+</html>

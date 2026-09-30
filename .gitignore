@@ -1,0 +1,8 @@
+venv/
+.venv/
+__pycache__/
+*.pyc
+.env
+fitbuddy.db
+.pytest_cache/
+.vscode/

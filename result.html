@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FitBuddy | Your Plan</title><link rel="stylesheet" href="{{ url_for('static', path='style.css') }}">
+</head>
+<body><div class="site-shell">
+<header class="nav"><a href="/" class="brand"><span class="brand-mark">F</span><span>FitBuddy</span></a><nav><a href="/">New plan</a><a href="/docs">API Docs</a></nav></header>
+<main class="wide-main">
+  <div class="result-head"><div><span class="eyebrow">YOUR FITBUDDY RESULT</span><h1>Nice work, {{ user.name }}.</h1><p>Here is your current 7-day routine and recovery guidance.</p></div><button class="button secondary" onclick="window.print()">Print / Save PDF</button></div>
+  {% if message %}<div class="alert success">✓ {{ message }}</div>{% endif %}
+  <section class="stats-grid"><div><small>User ID</small><strong>{{ user.user_id }}</strong></div><div><small>Age</small><strong>{{ user.age }}</strong></div><div><small>Weight</small><strong>{{ user.weight }} kg</strong></div><div><small>Goal</small><strong>{{ user.goal|title }}</strong></div><div><small>Intensity</small><strong>{{ user.intensity|title }}</strong></div></section>
+  <section class="card plan-card"><div class="section-heading"><div><span class="eyebrow">YOUR ROUTINE</span><h2>7-Day Workout Plan</h2></div><span class="source">{{ workout_source }}</span></div><pre class="plan">{{ workout_plan }}</pre></section>
+  <section class="card tip-card"><div class="section-heading"><div><span class="eyebrow">RECOVERY</span><h2>Nutrition / Recovery Tip</h2></div><span class="source">{{ nutrition_source }}</span></div><p class="tip">{{ nutrition_tip }}</p></section>
+  <section class="card feedback-card"><span class="eyebrow">STEP 03</span><h2>Want to change something?</h2><p class="muted">Tell FitBuddy what you want adjusted. For example: “add more recovery time” or “include more cardio”.</p><form action="/submit-feedback" method="post" onsubmit="showLoading(this)"><input type="hidden" name="user_id" value="{{ user.user_id }}"><textarea name="feedback" rows="4" maxlength="1000" required placeholder="What would you like to change?"></textarea><button class="button primary" type="submit"><span class="btn-text">Update My Plan →</span><span class="btn-loading" hidden>Updating…</span></button></form></section>
+  <div class="notice"><strong>Safety first:</strong> This is general educational guidance. Stop if an activity causes pain or unusual symptoms and seek appropriate professional guidance when needed.</div>
+</main><footer><span>© 2026 FitBuddy</span><span><a href="/">Create another plan</a> · <a href="/view-all-users">Admin</a></span></footer>
+</div><script>function showLoading(form){const b=form.querySelector('button[type=submit]');if(b){b.disabled=true;b.querySelector('.btn-text').hidden=true;b.querySelector('.btn-loading').hidden=false;}}</script></body></html>
